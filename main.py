@@ -55,3 +55,14 @@ def update_usuari(id: int, nom: str, cognom: str, edat: int, treball: str, alcad
         return {
             "Result": schema(usuari)
         }
+    
+#DELETE USUARI
+def delete_usuari(id: int, database: Session):
+    statement = select(usuaris).where(usuaris.id == id)
+    usuari = database.exec(statement).first()
+    if usuari:
+        database.delete(usuari)
+        database.commit()
+        return {
+            "Usuari eliminat"
+        }
