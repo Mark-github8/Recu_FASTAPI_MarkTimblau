@@ -34,8 +34,24 @@ def afegir_usuaris(nom, cognom, edat, treball, alcada, database: Session):
 #LLEGIR PER ID
 def leer_usuari(id: int, database: Session):
     statement = select(usuaris).where(usuaris.id == id)
-    existencia = database.exec(statement).first()
-    if existencia:
+    usuari = database.exec(statement).first()
+    if usuari:
         return {
-            "Result": existencia
+            "Result": schema(usuari)
+        }
+    
+#UPDATE USUARI
+def update_usuari(id: int, nom: str, cognom: str, edat: int, treball: str, alcada: int, database: Session):
+    statement = select(usuaris).where(usuaris.id == id)
+    usuari = database.exec(statement).first()
+    if usuari:
+        usuari.nom = nom
+        usuari.cognom = cognom
+        usuari.edat = edat
+        usuari.treball = treball
+        usuari.alcada = alcada
+        database.commit()
+        database.refresh(usuari)
+        return {
+            "Result": schema(usuari)
         }
