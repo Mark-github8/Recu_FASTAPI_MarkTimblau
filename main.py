@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel, create_engine, Session, select
 from dotenv import load_dotenv
-models.usuaris import usuaris
+from models.usuaris import usuaris
 import os
 
 
