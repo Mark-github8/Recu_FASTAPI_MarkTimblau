@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel, create_engine, Session
 from dotenv import load_dotenv
+models.usuaris import usuaris
 import os
 
 
@@ -21,3 +22,10 @@ def get_db():
        yield db
    finally:
        db.close()
+
+#NOU USUARI
+def afegir_usuaris(nom, cognom, edat, treball, alcada, database: Session):
+    nou_usuari = usuaris(nom=nom, cognom=cognom, edat=edat, treball=treball, alcada=alcada)
+    database.add(nou_usuari)
+    database.commit()
+    database.refresh(nou_usuari)
